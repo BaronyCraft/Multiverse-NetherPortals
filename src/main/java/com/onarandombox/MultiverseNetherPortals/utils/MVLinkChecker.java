@@ -36,8 +36,11 @@ public class MVLinkChecker {
             MultiverseWorld tpfrom = this.worldManager.getMVWorld(fromLocation.getWorld().getName());
             double fromScaling = tpfrom.getScaling();
             double yScaling = 1d * tpfrom.getCBWorld().getMaxHeight() / tpto.getCBWorld().getMaxHeight();
+            if (tpfrom.getEnvironment()==World.Environment.NORMAL && tpto.getEnvironment()==World.Environment.NETHER)
+                yScaling/=2;
             fromLocation = this.getScaledLocation(fromLocation, fromScaling, toScaling, yScaling);
             fromLocation.setWorld(tpto.getCBWorld());
+            this.plugin.log(Level.FINER, "found teleport destination at "+fromLocation.getBlockX()+"/"+fromLocation.getBlockY()+"/"+fromLocation.getBlockZ());
             return fromLocation;
         }
         return null;
@@ -59,6 +62,8 @@ public class MVLinkChecker {
             MultiverseWorld tpfrom = this.worldManager.getMVWorld(event.getFrom().getWorld().getName());
             double fromScaling = tpfrom.getScaling();
             double yScaling = 1d * tpfrom.getCBWorld().getMaxHeight() / tpto.getCBWorld().getMaxHeight();
+            if (tpfrom.getEnvironment()==World.Environment.NORMAL && tpto.getEnvironment()==World.Environment.NETHER)
+                yScaling/=2;            
             fromLocation = this.getScaledLocation(fromLocation, fromScaling, toScaling, yScaling);
 
             fromLocation.setWorld(tpto.getCBWorld());
